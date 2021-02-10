@@ -1,3 +1,4 @@
+import { CategoriesComponent } from './views/categories/categories.component';
 import { Component } from '@angular/core';
 
 @Component({
