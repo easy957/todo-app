@@ -13,6 +13,7 @@ export class DataHandlerService {
   tasksSubject = new BehaviorSubject<Task[]>(TestData.tasks);
   categoriesSubject = new BehaviorSubject<Category[]>(TestData.categories);
 
+
   constructor() { }
 
   // fillCategories(): Category[] {
