@@ -1,6 +1,7 @@
+import { Component, OnInit } from '@angular/core';
+
 import { Category } from './../../model/category';
 import { DataHandlerService } from './../../service/data-handler.service';
-import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-categories',
@@ -15,8 +16,6 @@ export class CategoriesComponent implements OnInit {
 
   ngOnInit() {
     this.categories = this.dataHandler.getCategories();
-    console.log(this.categories);
-    
   }
 
 }
