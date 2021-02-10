@@ -1,8 +1,8 @@
 // тестовые данные в виде массивов (заменяют таблицы БД)
 
-import {Category} from '../model/Category';
-import {Priority} from '../model/Priority';
-import {Task} from '../model/Task';
+import {Category} from '../model/category';
+import {Priority} from '../model/priority';
+import {Task} from '../model/task';
 
 export class TestData {
 
