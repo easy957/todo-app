@@ -19,4 +19,11 @@ constructor() { }
     return TestData.tasks;
   }
 
+  getTasksByCategory(category: Category): Task[] {
+    const filteredTasks = TestData.tasks.filter(task => task.category === category);
+    console.log(filteredTasks);
+
+    return filteredTasks;
+  }
+
 }
