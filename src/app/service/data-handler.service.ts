@@ -1,3 +1,5 @@
+import { PriorityDAOArray } from './../data/dao/impl/priorityDAOArray';
+import { Priority } from 'src/app/model/priority';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 
@@ -6,7 +8,6 @@ import { TaskDAOArray } from './../data/dao/impl/taskDAOArray';
 import { Category } from './../model/category';
 import { Task } from '../model/task';
 
-import { Priority } from '../model/priority';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,7 @@ export class DataHandlerService {
   // categoriesSubject = new BehaviorSubject<Category[]>(TestData.categories);
   private taskDaoArray = new TaskDAOArray();
   private categoryDaoArray = new CategoryDAOArray();
+  private priorityDaoArray = new PriorityDAOArray();
 
   constructor() { }
 
@@ -27,6 +29,10 @@ export class DataHandlerService {
 
   getAllCategories(): Observable<Category[]> {
     return this.categoryDaoArray.getAll();
+  }
+
+  getAllPriorities(): Observable<Priority[]> {
+    return this.priorityDaoArray.getAll();
   }
 
   updateTask(task: Task): Observable<Task> {
