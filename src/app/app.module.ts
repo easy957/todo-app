@@ -1,9 +1,14 @@
+import { browser } from 'protractor';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { CategoriesComponent } from './views/categories/categories.component';
 import { TasksListComponent } from './views/tasks-list/tasks-list.component';
+import { MatTableModule } from '@angular/material/table'
+import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -13,7 +18,11 @@ import { TasksListComponent } from './views/tasks-list/tasks-list.component';
     TasksListComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

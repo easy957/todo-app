@@ -1,0 +1,56 @@
+.completed {
+  color: #999;
+  text-decoration: line-through;
+}
+
+.no-value {
+  color: #ccc;
+}
+
+.col-id {
+  width: 3%;
+  text-align: center;
+}
+
+.col-title {
+  width: 40%;
+  padding-right: 1%;
+}
+
+.col-date {
+  width: 12%;
+  padding-right: 1%;
+}
+
+.col-priority {
+  width: 10%;
+  padding-right: 1%;
+}
+
+.col-category {
+  width: 10%;
+}
+
+// .col-select {
+//   width: 3%;
+// }
+
+// .col-operations {
+//   width: 8%;
+// }
+
+.col-color {
+  width: 1%;
+}
+
+th.mat-header-cell:first-of-type,
+td.mat-cell:first-of-type,
+td.mat-footer-cell:first-of-type {
+  padding-left: 0px;
+}
+
+th.mat-header-cell:last-of-type,
+td.mat-cell:last-of-type,
+td.mat-footer-cell:last-of-type {
+  padding-right: 0px;
+}
