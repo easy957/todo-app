@@ -17,18 +17,18 @@ export class TaskDAOArray implements TaskDAO {
   }
 
   search(
-    category: (Category | null),
-    searchText: (string | null),
-    status: (boolean | null),
-    priority: (Priority | null)): Observable<Task[]> {
+    category?: Category,
+    searchText?: string,
+    status?: boolean,
+    priority?: Priority): Observable<Task[]> {
     return of(this.searchTodos(category, searchText, status, priority));
   }
 
   private searchTodos(
-    category: (Category | null),
-    searchText: (string | null),
-    status: (boolean | null),
-    priority: (Priority | null)): Task[] {
+    category?: Category,
+    searchText?: string,
+    status?: boolean,
+    priority?: Priority): Task[] {
     let allTasks: Task[] = TestData.tasks;
 
     if (category != null) {
@@ -54,12 +54,13 @@ export class TaskDAOArray implements TaskDAO {
     throw new Error('Method not implemented.');
   }
   delete(id: number): Observable<Task> {
-    throw new Error('Method not implemented.');
+    const taskTmp: Task = TestData.tasks.find(t => t.id === id) as (Task);
+    TestData.tasks.splice(TestData.tasks.indexOf(taskTmp), 1);
+    return of(taskTmp);
   }
   update(task: Task): Observable<Task> {
 
-    // tslint:disable-next-line: no-non-null-assertion
-    const taskTmp: Task = TestData.tasks.find(t => t.id === task.id)!;
+    const taskTmp: Task = TestData.tasks.find(t => t.id === task.id) as (Task);
     TestData.tasks.splice(TestData.tasks.indexOf(taskTmp), 1, task);
 
     return of(task);

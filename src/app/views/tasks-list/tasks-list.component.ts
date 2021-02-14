@@ -29,8 +29,8 @@ export class TasksListComponent implements OnInit, AfterViewInit {
     this.fillTable();
   }
 
-  @Output()
-  updateTask = new EventEmitter<Task>();
+  @Output() updateTask = new EventEmitter<Task>();
+  @Output() deleteTask = new EventEmitter<Task>();
 
   constructor(
     private dataHandler: DataHandlerService,
@@ -117,6 +117,23 @@ export class TasksListComponent implements OnInit, AfterViewInit {
     );
 
     dialogRef.afterClosed().subscribe(result => {
+
+      if (result === 'complete') {
+        task.completed = true;
+        this.updateTask.emit(task);
+        return;
+      }
+
+      if (result === 'activate') {
+        task.completed = false;
+        this.updateTask.emit(task);
+        return;
+      }
+
+      if (result === 'delete') {
+        this.deleteTask.emit(task);
+        return;
+      }
 
       if (result as Task) {
         this.updateTask.emit(task);

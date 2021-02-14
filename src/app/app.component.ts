@@ -30,9 +30,9 @@ export class AppComponent implements OnInit {
 
     this.dataHandler.searchTasks(
       this.selectedCategory,
-      null,
-      null,
-      null
+      undefined,
+      undefined,
+      undefined
     ).subscribe(tasks => {
       this.tasks = tasks;
     });
@@ -41,12 +41,25 @@ export class AppComponent implements OnInit {
   public onUpdateTask(task: Task): void {
 
     this.dataHandler.updateTask(task).subscribe(() => {
-
       this.dataHandler.searchTasks(
         this.selectedCategory,
-        null,
-        null,
-        null
+        undefined,
+        undefined,
+        undefined
+      ).subscribe(tasks => {
+        this.tasks = tasks;
+      });
+    });
+  }
+
+  public onDeleteTask(task: Task): void {
+
+    this.dataHandler.deleteTask(task.id).subscribe(() => {
+      this.dataHandler.searchTasks(
+        this.selectedCategory,
+        undefined,
+        undefined,
+        undefined
       ).subscribe(tasks => {
         this.tasks = tasks;
       });

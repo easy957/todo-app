@@ -1,10 +1,11 @@
-import { EditTaskDialogComponent } from 'src/app/dialog/editTaskDialog/editTaskDialog.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { CategoriesComponent } from './views/categories/categories.component';
 import { TasksListComponent } from './views/tasks-list/tasks-list.component';
+import { ConfirmDialogComponent } from './dialog/confirmDialog/confirmDialog.component';
+import { EditTaskDialogComponent } from 'src/app/dialog/editTaskDialog/editTaskDialog.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -15,7 +16,8 @@ import { MatButtonModule } from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatOptionModule } from '@angular/material/core';
+import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 
 
@@ -24,7 +26,8 @@ import { MatSelectModule } from '@angular/material/select';
     AppComponent,
     CategoriesComponent,
     TasksListComponent,
-    EditTaskDialogComponent
+    EditTaskDialogComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -39,11 +42,14 @@ import { MatSelectModule } from '@angular/material/select';
     MatButtonModule,
     MatIconModule,
     MatOptionModule,
-    MatSelectModule
+    MatSelectModule,
+    MatNativeDateModule,
+    MatDatepickerModule
   ],
   providers: [],
   entryComponents: [
-    EditTaskDialogComponent
+    EditTaskDialogComponent,
+    ConfirmDialogComponent
   ],
   bootstrap: [AppComponent]
 })

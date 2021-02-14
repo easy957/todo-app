@@ -40,11 +40,15 @@ export class DataHandlerService {
   }
 
   searchTasks(
-    category: (Category | null),
-    searchText: (string | null),
-    status: (boolean | null),
-    priority: (Priority | null)): Observable<Task[]> {
+    category?: Category,
+    searchText?: string,
+    status?: boolean,
+    priority?: Priority): Observable<Task[]> {
     return this.taskDaoArray.search(category, searchText, status, priority);
+  }
+
+  deleteTask(id: number): Observable<Task> {
+    return this.taskDaoArray.delete(id);
   }
 
   // fillTasks(): void {
