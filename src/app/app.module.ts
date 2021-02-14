@@ -1,3 +1,6 @@
+import { registerLocaleData } from '@angular/common';
+import localeRu from '@angular/common/locales/ru';
+import { TaskDatePipe } from './pipe/taskDate.pipe';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -20,6 +23,8 @@ import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 
+registerLocaleData(localeRu);
+
 
 @NgModule({
   declarations: [
@@ -27,7 +32,8 @@ import { MatSelectModule } from '@angular/material/select';
     CategoriesComponent,
     TasksListComponent,
     EditTaskDialogComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    TaskDatePipe
   ],
   imports: [
     BrowserModule,

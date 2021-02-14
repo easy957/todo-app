@@ -46,7 +46,7 @@
           [ngClass]="{ completed: task.completed, novalue: task.date == null }"
           mat-cell
         >
-          {{ task.date ? (task.date | date: "d/M/y, HH:mm") : "Без даты" }}
+          {{ task.date | taskDate }}
         </td>
       </ng-container>
 
