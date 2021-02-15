@@ -22,6 +22,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 registerLocaleData(localeRu);
 
@@ -50,7 +51,8 @@ registerLocaleData(localeRu);
     MatOptionModule,
     MatSelectModule,
     MatNativeDateModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatCheckboxModule
   ],
   providers: [],
   entryComponents: [

@@ -31,13 +31,13 @@
   width: 10%;
 }
 
-// .col-select {
-//   width: 3%;
-// }
+.col-select {
+  width: 3%;
+}
 
-// .col-operations {
-//   width: 8%;
-// }
+.col-operations {
+  width: 10%;
+}
 
 .col-color {
   width: 1%;
@@ -63,4 +63,30 @@ td.mat-footer-cell:last-of-type {
 
 .pointer {
   cursor: pointer;
+}
+
+.delete-icon {
+  cursor: pointer;
+  color: #ea6561;
+  font-size: 18px;
+  margin-left: 3px;
+  margin-right: 3px;
+}
+
+.edit-icon {
+  cursor: pointer;
+  color: #9a9a9a;
+  font-size: 18px;
+  margin-right: 3px;
+  margin-left: 3px;
+}
+
+.col-select {
+  padding-top: 8px;
+}
+
+.mat-header-cell {
+  font-size: 1rem;
+  color: #9c27b0 !important;
+  font-weight: normal;
 }

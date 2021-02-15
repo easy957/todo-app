@@ -1,3 +1,6 @@
+import { Category } from './../../model/category';
+import {MatCheckbox} from '@angular/material/checkbox';
+import { ConfirmDialogComponent } from './../../dialog/confirmDialog/confirmDialog.component';
 import { AfterViewInit, Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import {DataHandlerService} from '../../service/data-handler.service';
 import {Task} from 'src/app/model/task';
@@ -15,7 +18,7 @@ import { EditTaskDialogComponent } from 'src/app/dialog/editTaskDialog/editTaskD
 export class TasksListComponent implements OnInit, AfterViewInit {
 
   // поля для таблицы (те, что отображают данные из задачи - должны совпадать с названиями переменных класса)
-  public displayedColumns: string[] = ['color', 'id', 'title', 'date', 'priority', 'category'];
+  public displayedColumns: string[] = ['color', 'id', 'title', 'date', 'priority', 'category', 'operations', 'select'];
   public dataSource!: MatTableDataSource<Task>; // контейнер - источник данных для таблицы
 
   @ViewChild(MatPaginator, {static: false}) private paginator!: MatPaginator;
@@ -31,6 +34,7 @@ export class TasksListComponent implements OnInit, AfterViewInit {
 
   @Output() updateTask = new EventEmitter<Task>();
   @Output() deleteTask = new EventEmitter<Task>();
+  @Output() selectCategory = new EventEmitter<Category>();
 
   constructor(
     private dataHandler: DataHandlerService,
@@ -140,5 +144,31 @@ export class TasksListComponent implements OnInit, AfterViewInit {
         return;
       }
     });
+  }
+
+  public openDeleteDialog(task: Task): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: '500px',
+      data: {
+        dialogTitle: 'Подтвердите действие',
+        message: `Вы действительно хотите удалить задачу: "${task.title}"`
+      },
+      autoFocus: false
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.deleteTask.emit(task);
+      }
+    });
+  }
+
+  public onToggleStatus(task: Task): void {
+    task.completed = !task.completed;
+    this.updateTask.emit(task);
+  }
+
+  public onSelectCategory(category: Category): void {
+    this.selectCategory.emit(category);
   }
 }

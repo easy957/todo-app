@@ -40,7 +40,7 @@ export class DataHandlerService {
   }
 
   searchTasks(
-    category?: Category,
+    category?: Category | undefined,
     searchText?: string,
     status?: boolean,
     priority?: Priority): Observable<Task[]> {

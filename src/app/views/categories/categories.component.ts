@@ -16,7 +16,9 @@ export class CategoriesComponent implements OnInit {
 
   @Output()
   selectCategory = new EventEmitter();
-  selectedCategory!: Category;
+
+  @Input()
+  selectedCategory!: Category | undefined;
 
   constructor(private dataHandler: DataHandlerService) { }
 
@@ -24,7 +26,7 @@ export class CategoriesComponent implements OnInit {
     // this.dataHandler.getAllCategories().subscribe(categories => this.categories = categories);
   }
 
-  showTasksByCategory(category: Category): void {
+  showTasksByCategory(category: Category | undefined): void {
     // this.selectedCategory = category;
     // this.dataHandler.fillTasksByCategory(category);
 

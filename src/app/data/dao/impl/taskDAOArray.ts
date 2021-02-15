@@ -17,7 +17,7 @@ export class TaskDAOArray implements TaskDAO {
   }
 
   search(
-    category?: Category,
+    category?: Category | undefined,
     searchText?: string,
     status?: boolean,
     priority?: Priority): Observable<Task[]> {
@@ -25,13 +25,13 @@ export class TaskDAOArray implements TaskDAO {
   }
 
   private searchTodos(
-    category?: Category,
+    category?: Category | undefined,
     searchText?: string,
     status?: boolean,
     priority?: Priority): Task[] {
     let allTasks: Task[] = TestData.tasks;
 
-    if (category != null) {
+    if (category !== undefined) {
       allTasks = allTasks.filter(todo => todo.category === category);
     }
 
