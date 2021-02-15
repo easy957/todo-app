@@ -38,8 +38,7 @@ export class TasksListComponent implements OnInit, AfterViewInit {
 
   constructor(
     private dataHandler: DataHandlerService,
-    private dialog: MatDialog) {
-  }
+    private dialog: MatDialog) {  }
 
   ngOnInit(): void {
     // this.dataHandler.getAllTasks().subscribe(tasks => this.tasks = tasks);

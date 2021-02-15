@@ -18,11 +18,25 @@ export class CategoryDAOArray implements CategoryDAO {
   get(id: number): Observable<Category> {
     throw new Error('Method not implemented.');
   }
+
   delete(id: number): Observable<Category> {
-    throw new Error('Method not implemented.');
+    TestData.tasks.forEach(task => {
+      if (task.category && task.category.id === id) {
+        task.category = undefined;
+      }
+    });
+
+    const tmpCategory: Category = TestData.categories.find(t => t.id === id) as (Category);
+    TestData.categories.splice(TestData.categories.indexOf(tmpCategory), 1);
+
+    return of(tmpCategory);
   }
-  update(T: Category): Observable<Category> {
-    throw new Error('Method not implemented.');
+
+  update(category: Category): Observable<Category> {
+    const tmpCategory: Category = TestData.categories.find(t => t.id === category.id) as (Category);
+    TestData.categories.splice(TestData.categories.indexOf(tmpCategory), 1, category);
+
+    return of(tmpCategory);
   }
 
 }

@@ -38,6 +38,19 @@ export class AppComponent implements OnInit {
     });
   }
 
+  public onDeleteCategory(category: Category): void {
+    this.dataHandler.deleteCategory(category.id).subscribe(() => {
+      this.selectedCategory = undefined;
+      this.onSelectCategory(this.selectedCategory);
+    });
+  }
+
+  public onUpdateCategory(category: Category): void {
+    this.dataHandler.updateCategory(category).subscribe(() => {
+      this.onSelectCategory(this.selectedCategory);
+    });
+  }
+
   public onUpdateTask(task: Task): void {
 
     this.dataHandler.updateTask(task).subscribe(() => {

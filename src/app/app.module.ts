@@ -1,3 +1,4 @@
+import { EditCategoryDialogComponent } from './dialog/editCategoryDialog/editCategoryDialog.component';
 import { registerLocaleData } from '@angular/common';
 import localeRu from '@angular/common/locales/ru';
 import { TaskDatePipe } from './pipe/taskDate.pipe';
@@ -34,7 +35,8 @@ registerLocaleData(localeRu);
     TasksListComponent,
     EditTaskDialogComponent,
     ConfirmDialogComponent,
-    TaskDatePipe
+    TaskDatePipe,
+    EditCategoryDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -57,7 +59,8 @@ registerLocaleData(localeRu);
   providers: [],
   entryComponents: [
     EditTaskDialogComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    EditCategoryDialogComponent
   ],
   bootstrap: [AppComponent]
 })
