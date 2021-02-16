@@ -4,7 +4,6 @@ import { Component, Input, Output } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 
 import { Category } from './../../model/category';
-import { DataHandlerService } from './../../service/data-handler.service';
 
 @Component({
   selector: 'app-categories',
@@ -13,6 +12,7 @@ import { DataHandlerService } from './../../service/data-handler.service';
 })
 export class CategoriesComponent {
   public indexMouseMove!: number | null;
+  public searchCategoryTitle!: string;
 
   @Input() categories!: Category[];
 
@@ -20,18 +20,13 @@ export class CategoriesComponent {
   @Output() deleteCategory = new EventEmitter<Category>();
   @Output() updateCategory = new EventEmitter<Category>();
   @Output() addCategory = new EventEmitter<Category>();
+  @Output() searchCategory = new EventEmitter<string>();
 
   @Input() selectedCategory!: Category | undefined;
 
-  constructor(
-    private dialog: MatDialog,
-    private dataHandler: DataHandlerService
-  ) {}
+  constructor(private dialog: MatDialog) {}
 
   showTasksByCategory(category: Category | undefined): void {
-    // this.selectedCategory = category;
-    // this.dataHandler.fillTasksByCategory(category);
-
     if (this.selectedCategory === category) {
       return;
     }
@@ -76,5 +71,13 @@ export class CategoriesComponent {
         return;
       }
     });
+  }
+
+  public search(): void {
+    if (this.searchCategoryTitle == null) {
+      return;
+    }
+
+    this.searchCategory.emit(this.searchCategoryTitle);
   }
 }

@@ -17,6 +17,8 @@ export class AppComponent implements OnInit {
 
   public selectedCategory!: Category | undefined;
 
+  public searchCategoryText = '';
+
   public searchTaskText = '';
   public statusFilter: boolean | undefined;
   public priorityFilter: Priority | undefined;
@@ -24,7 +26,8 @@ export class AppComponent implements OnInit {
   constructor(private dataHandler: DataHandlerService) {}
 
   ngOnInit(): void {
-    this.dataHandler.getAllTasks().subscribe((tasks) => (this.tasks = tasks));
+    this.onSelectCategory(undefined);
+    // this.dataHandler.getAllTasks().subscribe((tasks) => (this.tasks = tasks));
     this.dataHandler
       .getAllCategories()
       .subscribe((categories) => (this.categories = categories));
@@ -41,7 +44,7 @@ export class AppComponent implements OnInit {
 
   public onAddCategory(category: Category): void {
     this.dataHandler.addCategory(category).subscribe(() => {
-      this.onSelectCategory(category);
+      this.updateCategories();
     });
   }
 
@@ -54,7 +57,15 @@ export class AppComponent implements OnInit {
 
   public onUpdateCategory(category: Category): void {
     this.dataHandler.updateCategory(category).subscribe(() => {
-      this.onSelectCategory(this.selectedCategory);
+      this.onSearchCategory(this.searchCategoryText);
+    });
+  }
+
+  public onSearchCategory(title: string): void {
+    this.searchCategoryText = title;
+
+    this.dataHandler.searchCategories(title).subscribe((categories) => {
+      this.categories = categories;
     });
   }
 
@@ -67,7 +78,12 @@ export class AppComponent implements OnInit {
   public onUpdateTask(task: Task): void {
     this.dataHandler.updateTask(task).subscribe(() => {
       this.dataHandler
-        .searchTasks(this.selectedCategory, undefined, undefined, undefined)
+        .searchTasks(
+          this.selectedCategory,
+          this.searchTaskText,
+          this.statusFilter,
+          this.priorityFilter
+        )
         .subscribe((tasks) => {
           this.tasks = tasks;
         });
@@ -106,5 +122,11 @@ export class AppComponent implements OnInit {
       .subscribe((tasks) => {
         this.tasks = tasks;
       });
+  }
+
+  private updateCategories(): void {
+    this.dataHandler
+      .getAllCategories()
+      .subscribe((categories) => (this.categories = categories));
   }
 }

@@ -62,7 +62,7 @@ export class TasksListComponent implements OnInit {
   @Output() updateTask = new EventEmitter<Task>();
   @Output() deleteTask = new EventEmitter<Task>();
 
-  @Output() selectCategory = new EventEmitter<Category>();
+  @Output() selectCategory = new EventEmitter<Category | undefined>();
 
   @Output() filterByTitle = new EventEmitter<string>();
   @Output() filterByStatus = new EventEmitter<boolean | undefined>();
@@ -77,6 +77,7 @@ export class TasksListComponent implements OnInit {
     // датасорс обязательно нужно создавать для таблицы, в него присваивается любой источник (БД, массивы, JSON и пр.)
     this.dataSource = new MatTableDataSource();
     this.fillTable();
+    this.onSelectCategory(undefined);
   }
 
   toggleTaskCompleted(task: Task): void {
@@ -200,7 +201,7 @@ export class TasksListComponent implements OnInit {
     this.updateTask.emit(task);
   }
 
-  public onSelectCategory(category: Category): void {
+  public onSelectCategory(category: Category | undefined): void {
     this.selectCategory.emit(category);
   }
 

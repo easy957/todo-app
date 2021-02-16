@@ -13,6 +13,17 @@
   color: #dadada;
 }
 
+.search-category-area {
+  margin: 15px auto -20px;
+  width: 90%;
+}
+
+.no-categories-found {
+  text-align: center;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
 .category-title {
   width: 85%;
   display: inline-block;
@@ -29,6 +40,10 @@
   background-color: #673ab7;
   box-shadow: 0 4px 20px 0px rgb(0 0 0 / 14%),
     0 7px 10px -5px rgb(156 39 176 / 40%);
+}
+
+.sidebar .sidebar-wrapper {
+  height: calc(100vh - 125px);
 }
 
 .logo {

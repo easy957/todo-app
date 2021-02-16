@@ -9,8 +9,13 @@ export class CategoryDAOArray implements CategoryDAO {
   }
 
   search(title: string): Observable<Category[]> {
-    throw new Error('Method not implemented.');
+    return of(
+      TestData.categories
+        .filter((cat) => cat.title.toUpperCase().includes(title.toUpperCase()))
+        .sort((c1, c2) => c1.title.localeCompare(c2.title))
+    );
   }
+
   add(category: Category): Observable<Category> {
     if (category.id === 0) {
       category.id = this.getLastIdCategory();
