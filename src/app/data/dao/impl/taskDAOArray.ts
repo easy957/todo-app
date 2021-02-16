@@ -6,7 +6,6 @@ import { Task } from 'src/app/model/task';
 import { TaskDAO } from './../interface/taskDAO';
 
 export class TaskDAOArray implements TaskDAO {
-
   getAll(): Observable<Task[]> {
     return of(TestData.tasks);
   }
@@ -19,20 +18,36 @@ export class TaskDAOArray implements TaskDAO {
   search(
     category?: Category | undefined,
     searchText?: string,
-    status?: boolean,
-    priority?: Priority): Observable<Task[]> {
-    return of(this.searchTodos(category, searchText, status, priority));
+    status?: boolean | undefined,
+    priority?: Priority | undefined
+  ): Observable<Task[]> {
+    return of(this.searchTasks(category, searchText, status, priority));
   }
 
-  private searchTodos(
+  private searchTasks(
     category?: Category | undefined,
     searchText?: string,
-    status?: boolean,
-    priority?: Priority): Task[] {
+    status?: boolean | undefined,
+    priority?: Priority | undefined
+  ): Task[] {
     let allTasks: Task[] = TestData.tasks;
 
+    if (status !== undefined) {
+      allTasks = allTasks.filter((task) => task.completed === status);
+    }
+
     if (category !== undefined) {
-      allTasks = allTasks.filter(todo => todo.category === category);
+      allTasks = allTasks.filter((task) => task.category === category);
+    }
+
+    if (priority !== undefined) {
+      allTasks = allTasks.filter((task) => task.priority === priority);
+    }
+
+    if (searchText !== undefined && searchText.trim() !== '') {
+      allTasks = allTasks.filter((task) => {
+        return task.title.toUpperCase().includes(searchText.toUpperCase());
+      });
     }
 
     return allTasks;
@@ -50,20 +65,32 @@ export class TaskDAOArray implements TaskDAO {
   getTotalCount(): Observable<number> {
     throw new Error('Method not implemented.');
   }
-  add(T: Task): Observable<Task> {
-    throw new Error('Method not implemented.');
+  add(task: Task): Observable<Task> {
+    if (task.id === 0) {
+      task.id = this.getLastIdTask();
+    }
+    TestData.tasks.push(task);
+    return of(task);
   }
+
+  private getLastIdTask(): number {
+    return (
+      Math.max.apply(
+        Math,
+        TestData.tasks.map((task) => task.id)
+      ) + 1
+    );
+  }
+
   delete(id: number): Observable<Task> {
-    const taskTmp: Task = TestData.tasks.find(t => t.id === id) as (Task);
+    const taskTmp: Task = TestData.tasks.find((t) => t.id === id) as Task;
     TestData.tasks.splice(TestData.tasks.indexOf(taskTmp), 1);
     return of(taskTmp);
   }
   update(task: Task): Observable<Task> {
-
-    const taskTmp: Task = TestData.tasks.find(t => t.id === task.id) as (Task);
+    const taskTmp: Task = TestData.tasks.find((t) => t.id === task.id) as Task;
     TestData.tasks.splice(TestData.tasks.indexOf(taskTmp), 1, task);
 
     return of(task);
   }
-
 }

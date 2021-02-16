@@ -1,31 +1,35 @@
 import { ConfirmDialogComponent } from './../confirmDialog/confirmDialog.component';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 import { Component, Inject, OnInit, ValueProvider } from '@angular/core';
+import { Category } from 'src/app/model/category';
 
 @Component({
   selector: 'app-edit-category-dialog',
   templateUrl: './editCategoryDialog.component.html',
-  styleUrls: ['./editCategoryDialog.component.scss']
+  styleUrls: ['./editCategoryDialog.component.scss'],
 })
 export class EditCategoryDialogComponent implements OnInit {
-
   constructor(
     private dialogRef: MatDialogRef<EditCategoryDialogComponent>,
     @Inject(MAT_DIALOG_DATA) private data: [string, string],
     private dialog: MatDialog
-  ) { }
+  ) {}
 
   public dialogTitle!: string;
   public categoryTitle!: string;
-  // public canDelete = true;
+  public canDelete = true;
 
   ngOnInit(): void {
     this.categoryTitle = this.data[0];
     this.dialogTitle = this.data[1];
 
-    // if (!this.categoryTitle) {
-    //   this.canDelete = false;
-    // }
+    if (!this.categoryTitle) {
+      this.canDelete = false;
+    }
   }
 
   public onConfirm(): void {
@@ -41,16 +45,15 @@ export class EditCategoryDialogComponent implements OnInit {
       maxWidth: '500px',
       data: {
         dialogTitle: 'Подтвердите действие',
-        message: `Вы действительно хотите удалить категорию "${this.categoryTitle}"?`
+        message: `Вы действительно хотите удалить категорию "${this.categoryTitle}"?`,
       },
-      autoFocus: false
+      autoFocus: false,
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.dialogRef.close('delete');
       }
     });
   }
-
 }

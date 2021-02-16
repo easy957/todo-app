@@ -8,20 +8,17 @@ import { TaskDAOArray } from './../data/dao/impl/taskDAOArray';
 import { Category } from './../model/category';
 import { Task } from '../model/task';
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class DataHandlerService {
-
   // tasksSubject = new BehaviorSubject<Task[]>(TestData.tasks);
   // categoriesSubject = new BehaviorSubject<Category[]>(TestData.categories);
   private taskDaoArray = new TaskDAOArray();
   private categoryDaoArray = new CategoryDAOArray();
   private priorityDaoArray = new PriorityDAOArray();
 
-  constructor() { }
+  constructor() {}
 
   getAllTasks(): Observable<Task[]> {
     return this.taskDaoArray.getAll();
@@ -35,6 +32,10 @@ export class DataHandlerService {
     return this.priorityDaoArray.getAll();
   }
 
+  addTask(task: Task): Observable<Task> {
+    return this.taskDaoArray.add(task);
+  }
+
   updateTask(task: Task): Observable<Task> {
     return this.taskDaoArray.update(task);
   }
@@ -46,9 +47,14 @@ export class DataHandlerService {
   searchTasks(
     category?: Category | undefined,
     searchText?: string,
-    status?: boolean,
-    priority?: Priority): Observable<Task[]> {
+    status?: boolean | undefined,
+    priority?: Priority | undefined
+  ): Observable<Task[]> {
     return this.taskDaoArray.search(category, searchText, status, priority);
+  }
+
+  addCategory(category: Category): Observable<Category> {
+    return this.categoryDaoArray.add(category);
   }
 
   updateCategory(category: Category): Observable<Category> {
@@ -67,5 +73,4 @@ export class DataHandlerService {
   //   const filteredTasks = TestData.tasks.filter(task => task.category === category);
   //   this.tasksSubject.next(filteredTasks);
   // }
-
 }

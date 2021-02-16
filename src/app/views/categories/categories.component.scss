@@ -14,7 +14,7 @@
 }
 
 .category-title {
-  width: 70%;
+  width: 85%;
   display: inline-block;
   font-size: 16px;
 }
@@ -23,4 +23,19 @@
   width: 85%;
   display: inline-block;
   font-size: 16px;
+}
+
+.sidebar li.active > a {
+  background-color: #673ab7;
+  box-shadow: 0 4px 20px 0px rgb(0 0 0 / 14%),
+    0 7px 10px -5px rgb(156 39 176 / 40%);
+}
+
+.logo {
+  display: flex;
+  justify-content: space-around;
+}
+
+.mat-icon {
+  height: 23px;
 }

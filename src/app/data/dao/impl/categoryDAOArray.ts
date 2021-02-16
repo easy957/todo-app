@@ -4,7 +4,6 @@ import { Category } from 'src/app/model/category';
 import { CategoryDAO } from './../interface/categoryDAO';
 
 export class CategoryDAOArray implements CategoryDAO {
-
   getAll(): Observable<Category[]> {
     return of(TestData.categories);
   }
@@ -12,31 +11,52 @@ export class CategoryDAOArray implements CategoryDAO {
   search(title: string): Observable<Category[]> {
     throw new Error('Method not implemented.');
   }
-  add(T: Category): Observable<Category> {
-    throw new Error('Method not implemented.');
+  add(category: Category): Observable<Category> {
+    if (category.id === 0) {
+      category.id = this.getLastIdCategory();
+    }
+    TestData.categories.push(category);
+    return of(category);
   }
+
+  private getLastIdCategory(): number {
+    return (
+      Math.max.apply(
+        Math,
+        TestData.categories.map((category) => category.id)
+      ) + 1
+    );
+  }
+
   get(id: number): Observable<Category> {
     throw new Error('Method not implemented.');
   }
 
   delete(id: number): Observable<Category> {
-    TestData.tasks.forEach(task => {
+    TestData.tasks.forEach((task) => {
       if (task.category && task.category.id === id) {
         task.category = undefined;
       }
     });
 
-    const tmpCategory: Category = TestData.categories.find(t => t.id === id) as (Category);
+    const tmpCategory: Category = TestData.categories.find(
+      (t) => t.id === id
+    ) as Category;
     TestData.categories.splice(TestData.categories.indexOf(tmpCategory), 1);
 
     return of(tmpCategory);
   }
 
   update(category: Category): Observable<Category> {
-    const tmpCategory: Category = TestData.categories.find(t => t.id === category.id) as (Category);
-    TestData.categories.splice(TestData.categories.indexOf(tmpCategory), 1, category);
+    const tmpCategory: Category = TestData.categories.find(
+      (t) => t.id === category.id
+    ) as Category;
+    TestData.categories.splice(
+      TestData.categories.indexOf(tmpCategory),
+      1,
+      category
+    );
 
     return of(tmpCategory);
   }
-
 }

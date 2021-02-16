@@ -1,9 +1,16 @@
+import { Priority } from 'src/app/model/priority';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  Input,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { Category } from './../../model/category';
-import {MatCheckbox} from '@angular/material/checkbox';
 import { ConfirmDialogComponent } from './../../dialog/confirmDialog/confirmDialog.component';
-import { AfterViewInit, Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import {DataHandlerService} from '../../service/data-handler.service';
-import {Task} from 'src/app/model/task';
+import { DataHandlerService } from '../../service/data-handler.service';
+import { Task } from 'src/app/model/task';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -11,20 +18,32 @@ import { MatDialog } from '@angular/material/dialog';
 import { EditTaskDialogComponent } from 'src/app/dialog/editTaskDialog/editTaskDialog.component';
 
 @Component({
-    selector: 'app-tasks-list',
-    templateUrl: './tasks-list.component.html',
-    styleUrls: ['./tasks-list.component.scss']
+  selector: 'app-tasks-list',
+  templateUrl: './tasks-list.component.html',
+  styleUrls: ['./tasks-list.component.scss'],
 })
-export class TasksListComponent implements OnInit, AfterViewInit {
-
+export class TasksListComponent implements OnInit {
   // поля для таблицы (те, что отображают данные из задачи - должны совпадать с названиями переменных класса)
-  public displayedColumns: string[] = ['color', 'id', 'title', 'date', 'priority', 'category', 'operations', 'select'];
+  public displayedColumns: string[] = [
+    'color',
+    'id',
+    'title',
+    'date',
+    'priority',
+    'category',
+    'operations',
+    'select',
+  ];
   public dataSource!: MatTableDataSource<Task>; // контейнер - источник данных для таблицы
-
-  @ViewChild(MatPaginator, {static: false}) private paginator!: MatPaginator;
-  @ViewChild(MatSort, { static: false }) private sort!: MatSort;
-
   public tasks!: Task[];
+  public priorities!: Priority[];
+
+  public searchTaskText!: string;
+  public selectedStatusFilter: boolean | undefined = undefined;
+  public selectedPriorityFilter: Priority | undefined = undefined;
+
+  @ViewChild(MatPaginator, { static: false }) private paginator!: MatPaginator;
+  @ViewChild(MatSort, { static: false }) private sort!: MatSort;
 
   @Input('tasks')
   public set setTasks(tasks: Task[]) {
@@ -32,26 +51,32 @@ export class TasksListComponent implements OnInit, AfterViewInit {
     this.fillTable();
   }
 
+  @Input('priorities')
+  public set setPriorities(priorities: Priority[]) {
+    this.priorities = priorities;
+  }
+
+  @Input() selectedCategory!: Category | undefined;
+
+  @Output() addTask = new EventEmitter<Task>();
   @Output() updateTask = new EventEmitter<Task>();
   @Output() deleteTask = new EventEmitter<Task>();
+
   @Output() selectCategory = new EventEmitter<Category>();
+
+  @Output() filterByTitle = new EventEmitter<string>();
+  @Output() filterByStatus = new EventEmitter<boolean | undefined>();
+  @Output() filterByPriority = new EventEmitter<Priority | undefined>();
 
   constructor(
     private dataHandler: DataHandlerService,
-    private dialog: MatDialog) {  }
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
-    // this.dataHandler.getAllTasks().subscribe(tasks => this.tasks = tasks);
-
     // датасорс обязательно нужно создавать для таблицы, в него присваивается любой источник (БД, массивы, JSON и пр.)
     this.dataSource = new MatTableDataSource();
-
     this.fillTable();
-  }
-
-// в этом методе уже все проинциализировано, поэтому можно присваивать объекты (иначе может быть ошибка undefined)
-  ngAfterViewInit(): void {
-    this.addTableObjects();
   }
 
   toggleTaskCompleted(task: Task): void {
@@ -73,7 +98,6 @@ export class TasksListComponent implements OnInit, AfterViewInit {
 
   // показывает задачи с применением всех текущий условий (категория, поиск, фильтры и пр.)
   private fillTable(): void {
-
     if (!this.dataSource) {
       return;
     }
@@ -85,7 +109,6 @@ export class TasksListComponent implements OnInit, AfterViewInit {
     // чтобы можно было сортировать по столбцам "категория" и "приоритет", т.к. там не примитивные типы, а объекты
     // @ts-ignore - показывает ошибку для типа даты, но так работает, т.к. можно возвращать любой тип
     this.dataSource.sortingDataAccessor = (task, colName) => {
-
       // по каким полям выполнять сортировку для каждого столбца
       switch (colName) {
         case 'priority': {
@@ -110,17 +133,27 @@ export class TasksListComponent implements OnInit, AfterViewInit {
     this.dataSource.paginator = this.paginator; // обновить компонент постраничности (кол-во записей, страниц)
   }
 
-  public openEditTaskDialog(task: Task): void {
-    const dialogRef = this.dialog.open(
-      EditTaskDialogComponent,
-      {
-        data: [task, 'Редактирование задачи'],
-        autoFocus: false
+  public openAddTaskDialog(): void {
+    const task = new Task(0, '', false, undefined, this.selectedCategory);
+
+    const dialogRef = this.dialog.open(EditTaskDialogComponent, {
+      data: [task, 'Добавление задачи'],
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.addTask.emit(task);
       }
-    );
+    });
+  }
 
-    dialogRef.afterClosed().subscribe(result => {
+  public openEditTaskDialog(task: Task): void {
+    const dialogRef = this.dialog.open(EditTaskDialogComponent, {
+      data: [task, 'Редактирование задачи'],
+      autoFocus: false,
+    });
 
+    dialogRef.afterClosed().subscribe((result) => {
       if (result === 'complete') {
         task.completed = true;
         this.updateTask.emit(task);
@@ -150,12 +183,12 @@ export class TasksListComponent implements OnInit, AfterViewInit {
       maxWidth: '500px',
       data: {
         dialogTitle: 'Подтвердите действие',
-        message: `Вы действительно хотите удалить задачу: "${task.title}"`
+        message: `Вы действительно хотите удалить задачу: "${task.title}"`,
       },
-      autoFocus: false
+      autoFocus: false,
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.deleteTask.emit(task);
       }
@@ -169,5 +202,23 @@ export class TasksListComponent implements OnInit, AfterViewInit {
 
   public onSelectCategory(category: Category): void {
     this.selectCategory.emit(category);
+  }
+
+  public onFilterByTitle(): void {
+    this.filterByTitle.emit(this.searchTaskText);
+  }
+
+  public onFilterByStatus(value: boolean | undefined): void {
+    if (value !== this.selectedStatusFilter) {
+      this.selectedStatusFilter = value;
+      this.filterByStatus.emit(this.selectedStatusFilter);
+    }
+  }
+
+  public onFilterByPriority(priority: Priority | undefined): void {
+    if (priority !== this.selectedPriorityFilter) {
+      this.selectedPriorityFilter = priority;
+      this.filterByPriority.emit(this.selectedPriorityFilter);
+    }
   }
 }

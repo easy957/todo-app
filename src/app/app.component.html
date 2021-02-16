@@ -1,5 +1,6 @@
 <div class="wrapper">
   <app-categories
+    (addCategory)="onAddCategory($event)"
     (selectCategory)="onSelectCategory($event)"
     (deleteCategory)="onDeleteCategory($event)"
     (updateCategory)="onUpdateCategory($event)"
@@ -110,16 +111,18 @@
     <!-- End Navbar -->
     <div class="content">
       <div class="container-fluid">
-        <div class="row">
-          <div class="col">
-            <app-tasks-list
-              [tasks]="tasks"
-              (updateTask)="onUpdateTask($event)"
-              (deleteTask)="onDeleteTask($event)"
-              (selectCategory)="onSelectCategory($event)"
-            ></app-tasks-list>
-          </div>
-        </div>
+        <app-tasks-list
+          [tasks]="tasks"
+          [priorities]="priorities"
+          [selectedCategory]="selectedCategory"
+          (addTask)="onAddTask($event)"
+          (updateTask)="onUpdateTask($event)"
+          (deleteTask)="onDeleteTask($event)"
+          (selectCategory)="onSelectCategory($event)"
+          (filterByStatus)="onFilterTasksByStatus($event)"
+          (filterByTitle)="onSearchTasks($event)"
+          (filterByPriority)="onFilterTasksByPriority($event)"
+        ></app-tasks-list>
       </div>
     </div>
     <footer class="footer">

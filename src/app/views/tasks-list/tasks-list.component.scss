@@ -13,12 +13,12 @@
 }
 
 .col-title {
-  width: 40%;
+  width: 43%;
   padding-right: 1%;
 }
 
 .col-date {
-  width: 12%;
+  width: 13%;
   padding-right: 1%;
 }
 
@@ -36,7 +36,9 @@
 }
 
 .col-operations {
-  width: 10%;
+  width: 8%;
+  white-space: nowrap;
+  padding-right: 10px;
 }
 
 .col-color {
@@ -66,6 +68,7 @@ td.mat-footer-cell:last-of-type {
 }
 
 .delete-icon {
+  display: inline-block;
   cursor: pointer;
   color: #ea6561;
   font-size: 18px;
@@ -74,11 +77,10 @@ td.mat-footer-cell:last-of-type {
 }
 
 .edit-icon {
+  display: inline-block;
   cursor: pointer;
   color: #9a9a9a;
   font-size: 18px;
-  margin-right: 3px;
-  margin-left: 3px;
 }
 
 .col-select {
@@ -89,4 +91,18 @@ td.mat-footer-cell:last-of-type {
   font-size: 1rem;
   color: #9c27b0 !important;
   font-weight: normal;
+}
+
+.tasks-title {
+  font-size: 24px;
+  vertical-align: middle;
+}
+
+.add-task-button {
+  padding: 0 45px;
+  font-size: 18px;
+}
+
+.reset-filter-button {
+  height: 70%;
 }

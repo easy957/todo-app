@@ -35,3 +35,12 @@ body {
 .dialog-clear {
   font-size: 25px !important;
 }
+
+button:active {
+  border: none;
+  outline: none;
+}
+
+button:focus {
+  outline: 0;
+}
