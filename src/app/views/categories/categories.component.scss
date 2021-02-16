@@ -18,6 +18,10 @@
   width: 90%;
 }
 
+.search-category-field {
+  z-index: 10;
+}
+
 .no-categories-found {
   text-align: center;
   font-size: 16px;
@@ -53,4 +57,8 @@
 
 .mat-icon {
   height: 23px;
+}
+
+.sidebar-background {
+  background-image: url(../../../assets/img/sidebar-2.jpg);
 }

@@ -44,7 +44,7 @@ export class TaskDAOArray implements TaskDAO {
       allTasks = allTasks.filter((task) => task.priority === priority);
     }
 
-    if (searchText !== undefined && searchText.trim() !== '') {
+    if (searchText !== undefined) {
       allTasks = allTasks.filter((task) => {
         return task.title.toUpperCase().includes(searchText.toUpperCase());
       });
@@ -53,18 +53,25 @@ export class TaskDAOArray implements TaskDAO {
     return allTasks;
   }
 
-  getCompletedCountInCategory(category: Category): Observable<number> {
-    throw new Error('Method not implemented.');
+  getCompletedCountInCategory(
+    category: Category | undefined
+  ): Observable<number> {
+    return of(this.searchTasks(category, undefined, true, undefined).length);
   }
-  getUncompletedCountInCategory(category: Category): Observable<number> {
-    throw new Error('Method not implemented.');
+  getUncompletedCountInCategory(
+    category: Category | undefined
+  ): Observable<number> {
+    return of(this.searchTasks(category, undefined, false, undefined).length);
   }
-  getTotalCountInCategory(category: Category): Observable<number> {
-    throw new Error('Method not implemented.');
+  getTotalCountInCategory(category: Category | undefined): Observable<number> {
+    return of(
+      this.searchTasks(category, undefined, undefined, undefined).length
+    );
   }
   getTotalCount(): Observable<number> {
-    throw new Error('Method not implemented.');
+    return of(TestData.tasks.length);
   }
+
   add(task: Task): Observable<Task> {
     if (task.id === 0) {
       task.id = this.getLastIdTask();
@@ -87,6 +94,7 @@ export class TaskDAOArray implements TaskDAO {
     TestData.tasks.splice(TestData.tasks.indexOf(taskTmp), 1);
     return of(taskTmp);
   }
+
   update(task: Task): Observable<Task> {
     const taskTmp: Task = TestData.tasks.find((t) => t.id === task.id) as Task;
     TestData.tasks.splice(TestData.tasks.indexOf(taskTmp), 1, task);

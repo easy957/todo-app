@@ -69,12 +69,20 @@ export class DataHandlerService {
     return this.categoryDaoArray.delete(id);
   }
 
-  // fillTasks(): void {
-  //   this.tasksSubject.next(TestData.tasks);
-  // }
-
-  // fillTasksByCategory(category: Category): void {
-  //   const filteredTasks = TestData.tasks.filter(task => task.category === category);
-  //   this.tasksSubject.next(filteredTasks);
-  // }
+  getCompletedCountInCategory(
+    category: Category | undefined
+  ): Observable<number> {
+    return this.taskDaoArray.getCompletedCountInCategory(category);
+  }
+  getUncompletedCountInCategory(
+    category: Category | undefined
+  ): Observable<number> {
+    return this.taskDaoArray.getUncompletedCountInCategory(category);
+  }
+  getUncompletedTotalCount(): Observable<number> {
+    return this.taskDaoArray.getUncompletedCountInCategory(undefined);
+  }
+  getTotalCountInCategory(category: Category | undefined): Observable<number> {
+    return this.taskDaoArray.getTotalCountInCategory(category);
+  }
 }

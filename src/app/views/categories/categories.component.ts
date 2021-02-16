@@ -1,6 +1,6 @@
 import { EditCategoryDialogComponent } from './../../dialog/editCategoryDialog/editCategoryDialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { Component, Input, Output } from '@angular/core';
+import { Component, Input, Output, OnInit } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 
 import { Category } from './../../model/category';
@@ -10,13 +10,13 @@ import { Category } from './../../model/category';
   templateUrl: './categories.component.html',
   styleUrls: ['./categories.component.scss'],
 })
-export class CategoriesComponent {
+export class CategoriesComponent implements OnInit {
   public indexMouseMove!: number | null;
   public searchCategoryTitle!: string;
 
   @Input() categories!: Category[];
 
-  @Output() selectCategory = new EventEmitter<Category>();
+  @Output() selectCategory = new EventEmitter<Category | undefined>();
   @Output() deleteCategory = new EventEmitter<Category>();
   @Output() updateCategory = new EventEmitter<Category>();
   @Output() addCategory = new EventEmitter<Category>();
@@ -25,6 +25,12 @@ export class CategoriesComponent {
   @Input() selectedCategory!: Category | undefined;
 
   constructor(private dialog: MatDialog) {}
+
+  ngOnInit(): void {
+    setTimeout(() => {
+      this.showTasksByCategory(undefined);
+    }, 5000);
+  }
 
   showTasksByCategory(category: Category | undefined): void {
     if (this.selectedCategory === category) {

@@ -24,6 +24,25 @@ import { EditTaskDialogComponent } from 'src/app/dialog/editTaskDialog/editTaskD
 })
 export class TasksListComponent implements OnInit {
   // поля для таблицы (те, что отображают данные из задачи - должны совпадать с названиями переменных класса)
+  public dataSource!: MatTableDataSource<Task>; // контейнер - источник данных для таблицы
+
+  @ViewChild(MatPaginator, { static: false }) private paginator!: MatPaginator;
+  @ViewChild(MatSort, { static: false }) private sort!: MatSort;
+
+  @Output() addTask = new EventEmitter<Task>();
+  @Output() updateTask = new EventEmitter<Task>();
+  @Output() deleteTask = new EventEmitter<Task>();
+
+  @Output() selectCategory = new EventEmitter<Category | undefined>();
+
+  @Output() filterByTitle = new EventEmitter<string>();
+  @Output() filterByStatus = new EventEmitter<boolean | undefined>();
+  @Output() filterByPriority = new EventEmitter<Priority | undefined>();
+
+  public searchTaskText!: string;
+  public selectedStatusFilter: boolean | undefined = undefined;
+  public selectedPriorityFilter: Priority | undefined = undefined;
+
   public displayedColumns: string[] = [
     'color',
     'id',
@@ -34,16 +53,9 @@ export class TasksListComponent implements OnInit {
     'operations',
     'select',
   ];
-  public dataSource!: MatTableDataSource<Task>; // контейнер - источник данных для таблицы
-  public tasks!: Task[];
+
   public priorities!: Priority[];
-
-  public searchTaskText!: string;
-  public selectedStatusFilter: boolean | undefined = undefined;
-  public selectedPriorityFilter: Priority | undefined = undefined;
-
-  @ViewChild(MatPaginator, { static: false }) private paginator!: MatPaginator;
-  @ViewChild(MatSort, { static: false }) private sort!: MatSort;
+  public tasks!: Task[];
 
   @Input('tasks')
   public set setTasks(tasks: Task[]) {
@@ -57,16 +69,6 @@ export class TasksListComponent implements OnInit {
   }
   @Input() selectedCategory!: Category | undefined;
 
-  @Output() addTask = new EventEmitter<Task>();
-  @Output() updateTask = new EventEmitter<Task>();
-  @Output() deleteTask = new EventEmitter<Task>();
-
-  @Output() selectCategory = new EventEmitter<Category | undefined>();
-
-  @Output() filterByTitle = new EventEmitter<string>();
-  @Output() filterByStatus = new EventEmitter<boolean | undefined>();
-  @Output() filterByPriority = new EventEmitter<Priority | undefined>();
-
   constructor(
     private dataHandler: DataHandlerService,
     private dialog: MatDialog
@@ -75,7 +77,7 @@ export class TasksListComponent implements OnInit {
   ngOnInit(): void {
     // датасорс обязательно нужно создавать для таблицы, в него присваивается любой источник (БД, массивы, JSON и пр.)
     this.dataSource = new MatTableDataSource();
-    this.fillTable();
+    // this.fillTable();
     this.onSelectCategory(undefined);
   }
 
