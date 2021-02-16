@@ -14,7 +14,7 @@ export class Task {
     title: string,
     completed: boolean,
     priority?: Priority,
-    category?: Category,
+    category?: Category | undefined,
     date?: Date
   ) {
     this.id = id;

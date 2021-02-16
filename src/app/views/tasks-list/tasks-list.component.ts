@@ -55,7 +55,6 @@ export class TasksListComponent implements OnInit {
   public set setPriorities(priorities: Priority[]) {
     this.priorities = priorities;
   }
-
   @Input() selectedCategory!: Category | undefined;
 
   @Output() addTask = new EventEmitter<Task>();

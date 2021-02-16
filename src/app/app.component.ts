@@ -1,8 +1,8 @@
-import { Priority } from 'src/app/model/priority';
 import { Component, OnInit } from '@angular/core';
-import { DataHandlerService } from './service/data-handler.service';
+import { Priority } from 'src/app/model/priority';
 import { Category } from './model/category';
 import { Task } from './model/task';
+import { DataHandlerService } from './service/data-handler.service';
 
 @Component({
   selector: 'app-root',
@@ -10,12 +10,12 @@ import { Task } from './model/task';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  title = 'my-app';
-  tasks!: Task[];
-  categories!: Category[];
-  priorities!: Priority[];
+  public title = 'my-app';
+  public tasks!: Task[];
+  public categories!: Category[];
+  public priorities!: Priority[];
 
-  public selectedCategory!: Category | undefined;
+  public selectedCategory: Category | undefined = undefined;
 
   public searchCategoryText = '';
 
@@ -26,7 +26,6 @@ export class AppComponent implements OnInit {
   constructor(private dataHandler: DataHandlerService) {}
 
   ngOnInit(): void {
-    this.onSelectCategory(undefined);
     // this.dataHandler.getAllTasks().subscribe((tasks) => (this.tasks = tasks));
     this.dataHandler
       .getAllCategories()
@@ -34,6 +33,7 @@ export class AppComponent implements OnInit {
     this.dataHandler
       .getAllPriorities()
       .subscribe((priorities) => (this.priorities = priorities));
+    this.onSelectCategory(undefined);
   }
 
   public onSelectCategory(category: Category | undefined): void {
@@ -51,7 +51,7 @@ export class AppComponent implements OnInit {
   public onDeleteCategory(category: Category): void {
     this.dataHandler.deleteCategory(category.id).subscribe(() => {
       this.selectedCategory = undefined;
-      this.onSelectCategory(this.selectedCategory);
+      this.onSelectCategory(undefined);
     });
   }
 
@@ -77,16 +77,7 @@ export class AppComponent implements OnInit {
 
   public onUpdateTask(task: Task): void {
     this.dataHandler.updateTask(task).subscribe(() => {
-      this.dataHandler
-        .searchTasks(
-          this.selectedCategory,
-          this.searchTaskText,
-          this.statusFilter,
-          this.priorityFilter
-        )
-        .subscribe((tasks) => {
-          this.tasks = tasks;
-        });
+      this.updateTasks();
     });
   }
 
@@ -119,7 +110,7 @@ export class AppComponent implements OnInit {
         this.statusFilter,
         this.priorityFilter
       )
-      .subscribe((tasks) => {
+      .subscribe((tasks: Task[]) => {
         this.tasks = tasks;
       });
   }
