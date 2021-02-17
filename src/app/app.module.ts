@@ -1,3 +1,4 @@
+import { SettingsDialogComponent } from './dialog/settingsDialog/settingsDialog.component';
 import { StatCardComponent } from './views/stat/stat-card/stat-card.component';
 import { StatComponent } from './views/stat/stat.component';
 import { HeaderComponent } from './views/header/header.component';
@@ -28,6 +29,8 @@ import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ColorPickerModule } from 'ngx-color-picker';
+import { PrioritiesComponent } from './views/priorities/priorities.component';
 
 registerLocaleData(localeRu);
 
@@ -44,6 +47,8 @@ registerLocaleData(localeRu);
     HeaderComponent,
     StatComponent,
     StatCardComponent,
+    SettingsDialogComponent,
+    PrioritiesComponent,
   ],
   imports: [
     BrowserModule,
@@ -62,12 +67,14 @@ registerLocaleData(localeRu);
     MatNativeDateModule,
     MatDatepickerModule,
     MatCheckboxModule,
+    ColorPickerModule,
   ],
   providers: [],
   entryComponents: [
     EditTaskDialogComponent,
     ConfirmDialogComponent,
     EditCategoryDialogComponent,
+    SettingsDialogComponent,
   ],
   bootstrap: [AppComponent],
 })

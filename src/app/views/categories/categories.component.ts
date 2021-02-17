@@ -1,3 +1,4 @@
+import { OperType } from './../../dialog/OperType';
 import { EditCategoryDialogComponent } from './../../dialog/editCategoryDialog/editCategoryDialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Component, Input, Output, OnInit } from '@angular/core';
@@ -13,6 +14,7 @@ import { Category } from './../../model/category';
 export class CategoriesComponent implements OnInit {
   public indexMouseMove!: number | null;
   public searchCategoryTitle!: string;
+  public selectedCategoryMap!: Map<Category, number>;
 
   @Input() categories!: Category[];
 
@@ -23,6 +25,10 @@ export class CategoriesComponent implements OnInit {
   @Output() searchCategory = new EventEmitter<string>();
 
   @Input() selectedCategory!: Category | undefined;
+  @Input('categoryMap') set setCategoryMap(categoryMap: Map<Category, number>) {
+    this.selectedCategoryMap = categoryMap;
+  }
+  @Input() uncompletedTotal!: number;
 
   constructor(private dialog: MatDialog) {}
 
@@ -49,7 +55,7 @@ export class CategoriesComponent implements OnInit {
   public openAddCategoryDialog(): void {
     const category = new Category(0, '');
     const dialogRef = this.dialog.open(EditCategoryDialogComponent, {
-      data: ['', 'Добавить новую категорию'],
+      data: ['', 'Добавить новую категорию', OperType.ADD],
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -63,7 +69,7 @@ export class CategoriesComponent implements OnInit {
 
   public openEditDialog(category: Category): void {
     const dialogRef = this.dialog.open(EditCategoryDialogComponent, {
-      data: [category.title, 'Редактирование категории'],
+      data: [category.title, 'Редактирование категории', OperType.EDIT],
       width: '400px',
     });
 

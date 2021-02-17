@@ -20,6 +20,10 @@ export class DataHandlerService {
 
   constructor() {}
 
+  // --------------------------
+  // ---------ПОЛУЧЕНИЕ ВСЕХ ДАННЫХ-----------------
+  // --------------------------
+
   getAllTasks(): Observable<Task[]> {
     return this.taskDaoArray.getAll();
   }
@@ -31,6 +35,10 @@ export class DataHandlerService {
   getAllPriorities(): Observable<Priority[]> {
     return this.priorityDaoArray.getAll();
   }
+
+  // --------------------------
+  // -------РАБОТА С ЗАДАЧАМИ-------------------
+  // --------------------------
 
   addTask(task: Task): Observable<Task> {
     return this.taskDaoArray.add(task);
@@ -53,6 +61,10 @@ export class DataHandlerService {
     return this.taskDaoArray.search(category, searchText, status, priority);
   }
 
+  // --------------------------
+  // ---------РАБОТА С КАТЕГОРИЯМИ-----------------
+  // --------------------------
+
   searchCategories(title: string): Observable<Category[]> {
     return this.categoryDaoArray.search(title);
   }
@@ -68,6 +80,26 @@ export class DataHandlerService {
   deleteCategory(id: number): Observable<Category> {
     return this.categoryDaoArray.delete(id);
   }
+
+  // --------------------------
+  // --------РАБОТА С ПРИОРИТЕТАМИ------------------
+  // --------------------------
+
+  addPriority(priority: Priority): Observable<Priority> {
+    return this.priorityDaoArray.add(priority);
+  }
+
+  updatePriority(priority: Priority): Observable<Priority> {
+    return this.priorityDaoArray.update(priority);
+  }
+
+  deletePriority(id: number): Observable<Priority> {
+    return this.priorityDaoArray.delete(id);
+  }
+
+  // --------------------------
+  // ----------СТАТИСТИКА----------------
+  // --------------------------
 
   getCompletedCountInCategory(
     category: Category | undefined

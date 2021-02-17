@@ -1,11 +1,11 @@
+import { OperType } from './../OperType';
 import { ConfirmDialogComponent } from './../confirmDialog/confirmDialog.component';
 import {
   MatDialog,
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
-import { Component, Inject, OnInit, ValueProvider } from '@angular/core';
-import { Category } from 'src/app/model/category';
+import { Component, Inject, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-edit-category-dialog',
@@ -15,21 +15,23 @@ import { Category } from 'src/app/model/category';
 export class EditCategoryDialogComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<EditCategoryDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) private data: [string, string],
+    @Inject(MAT_DIALOG_DATA) private data: [string, string, OperType],
     private dialog: MatDialog
   ) {}
 
   public dialogTitle!: string;
   public categoryTitle!: string;
-  public canDelete = true;
+
+  public operType!: OperType;
 
   ngOnInit(): void {
     this.categoryTitle = this.data[0];
     this.dialogTitle = this.data[1];
+    this.operType = this.data[2];
+  }
 
-    if (!this.categoryTitle) {
-      this.canDelete = false;
-    }
+  public canDelete(): boolean {
+    return this.operType === OperType.EDIT;
   }
 
   public onConfirm(): void {

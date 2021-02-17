@@ -1,3 +1,4 @@
+import { OperType } from './../OperType';
 import { Category } from 'src/app/model/category';
 import { DataHandlerService } from './../../service/data-handler.service';
 import {
@@ -18,7 +19,7 @@ import { ConfirmDialogComponent } from '../confirmDialog/confirmDialog.component
 export class EditTaskDialogComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<EditTaskDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) private data: [Task, string],
+    @Inject(MAT_DIALOG_DATA) private data: [Task, string, OperType],
     private dataHandler: DataHandlerService,
     private dialog: MatDialog
   ) {}
@@ -33,20 +34,17 @@ export class EditTaskDialogComponent implements OnInit {
   public tmpPriority!: Priority;
   public tmpDate!: Date | undefined;
 
-  public canDelete = true;
+  public operType!: OperType;
 
   ngOnInit(): void {
     this.task = this.data[0];
     this.dialogTitle = this.data[1];
+    this.operType = this.data[2];
 
     this.tmpTitle = this.task.title;
     this.tmpCategory = this.task.category as Category;
     this.tmpPriority = this.task.priority as Priority;
     this.tmpDate = this.task.date;
-
-    if (!this.tmpTitle) {
-      this.canDelete = false;
-    }
 
     this.dataHandler
       .getAllCategories()
@@ -54,6 +52,10 @@ export class EditTaskDialogComponent implements OnInit {
     this.dataHandler
       .getAllPriorities()
       .subscribe((items) => (this.priorities = items));
+  }
+
+  public canDelete(): boolean {
+    return this.operType === OperType.EDIT;
   }
 
   public onConfirm(): void {

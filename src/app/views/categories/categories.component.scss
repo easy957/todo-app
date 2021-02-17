@@ -13,6 +13,16 @@
   color: #dadada;
 }
 
+.uncompleted-count {
+  background-color: #eaeaea;
+  border-radius: 3px;
+  padding: 3px 0px;
+  color: black;
+  width: 15%;
+  display: inline-block;
+  text-align: center;
+}
+
 .search-category-area {
   margin: 15px auto -20px;
   width: 90%;
@@ -29,7 +39,7 @@
 }
 
 .category-title {
-  width: 85%;
+  width: 70%;
   display: inline-block;
   font-size: 16px;
 }
@@ -40,13 +50,13 @@
   font-size: 16px;
 }
 
-.sidebar li.active > a {
+.sidebar-wrapper li.active > a {
   background-color: #673ab7;
   box-shadow: 0 4px 20px 0px rgb(0 0 0 / 14%),
     0 7px 10px -5px rgb(156 39 176 / 40%);
 }
 
-.sidebar .sidebar-wrapper {
+.sidebar-wrapper {
   height: calc(100vh - 125px);
 }
 

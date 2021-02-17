@@ -1,3 +1,4 @@
+import { OperType } from './../../dialog/OperType';
 import { Priority } from 'src/app/model/priority';
 import {
   Component,
@@ -139,7 +140,7 @@ export class TasksListComponent implements OnInit {
     const task = new Task(0, '', false, undefined, this.selectedCategory);
 
     const dialogRef = this.dialog.open(EditTaskDialogComponent, {
-      data: [task, 'Добавление задачи'],
+      data: [task, 'Добавление задачи', OperType.ADD],
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -151,7 +152,7 @@ export class TasksListComponent implements OnInit {
 
   public openEditTaskDialog(task: Task): void {
     const dialogRef = this.dialog.open(EditTaskDialogComponent, {
-      data: [task, 'Редактирование задачи'],
+      data: [task, 'Редактирование задачи', OperType.EDIT],
       autoFocus: false,
     });
 
@@ -185,7 +186,7 @@ export class TasksListComponent implements OnInit {
       maxWidth: '500px',
       data: {
         dialogTitle: 'Подтвердите действие',
-        message: `Вы действительно хотите удалить задачу: "${task.title}"`,
+        message: `Вы действительно хотите удалить задачу: "${task.title}" ?`,
       },
       autoFocus: false,
     });

@@ -1,4 +1,7 @@
+import { IntroService } from './../../service/intro.service';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { SettingsDialogComponent } from 'src/app/dialog/settingsDialog/settingsDialog.component';
 
 @Component({
   selector: 'app-header',
@@ -11,9 +14,20 @@ export class HeaderComponent {
 
   @Output() public toggleStat = new EventEmitter<boolean>();
 
+  constructor(private dialog: MatDialog, private introService: IntroService) {}
+
   public onToggleStat(): void {
     this.toggleStat.emit(!this.statShown);
   }
 
-  constructor() {}
+  public onShowIntro(): void {
+    this.introService.startIntroJS(false);
+  }
+
+  public showSettings(): void {
+    const dialogRef = this.dialog.open(SettingsDialogComponent, {
+      autoFocus: false,
+      width: '500px',
+    });
+  }
 }

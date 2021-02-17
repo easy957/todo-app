@@ -1,0 +1,24 @@
+<div
+  class="vertical-middle priorities"
+  *ngFor="let priority of priorities; let index = index"
+>
+  <div class="row align-self-baseline">
+    <div class="col-8">
+      <a class="pointer">{{ priority.title }}</a>
+    </div>
+    <div class="col-4 d-flex justify-content-between text-right">
+      <span
+        [(colorPicker)]="priority.color"
+        [style.background]="priority.color"
+        class="color-circle"
+      ></span>
+      <p class="pointer gray" (click)="openEditPriorityDialog(priority)">
+        <mat-icon>edit</mat-icon>
+      </p>
+      <p class="pointer gray" (click)="openDeletePriorityDialog(priority)">
+        <mat-icon>delete</mat-icon>
+      </p>
+    </div>
+  </div>
+</div>
+<p class="link title" (click)="openAddPriorityDialog()">Добавить приоритет</p>

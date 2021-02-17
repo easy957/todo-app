@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import "assets/css/material-dashboard.css";
 @import "@angular/material/prebuilt-themes/deeppurple-amber.css";
+@import "../node_modules/intro.js/introjs.css";
 
 html,
 body {
@@ -20,6 +21,10 @@ body {
 
 .red {
   color: red;
+}
+
+.pointer {
+  cursor: pointer;
 }
 
 .link {
