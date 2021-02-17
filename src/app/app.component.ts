@@ -1,23 +1,19 @@
 import { IntroService } from './service/intro.service';
-import {
-  AfterContentInit,
-  AfterViewInit,
-  Component,
-  OnInit,
-} from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { zip, of } from 'rxjs';
 import { Priority } from 'src/app/model/priority';
 import { Category } from './model/category';
 import { Task } from './model/task';
 import { DataHandlerService } from './service/data-handler.service';
 import { concatMap, map } from 'rxjs/operators';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
+export class AppComponent implements OnInit, AfterViewInit {
   public title = 'my-app';
   public tasks!: Task[];
   public categories!: Category[];
@@ -40,12 +36,29 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
 
   public statShown = true;
 
+  //  ------ МЕНЮ ----------
+  public menuOpened = true;
+  public menuMode!: 'over' | 'push' | 'slide';
+  public menuPosition!: 'start' | 'end' | 'left' | 'right' | 'top' | 'bottom';
+  public showBackdrop!: boolean;
+
+  private isMobile!: boolean;
+  private isTablet!: boolean;
+
   constructor(
     private dataHandler: DataHandlerService,
-    private introService: IntroService
-  ) {}
+    private introService: IntroService,
+    private deviceService: DeviceDetectorService
+  ) {
+    //  Проверка типа устройства пользователя
+    this.isMobile = deviceService.isMobile();
+    this.isTablet = deviceService.isTablet();
+
+    this.statShown = true ? !this.isMobile : false;
+  }
 
   ngOnInit(): void {
+    this.setMenuValues();
     this.dataHandler
       .getAllCategories()
       .subscribe((categories) => (this.categories = categories));
@@ -60,10 +73,30 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
     this.introService.startIntroJS(true);
   }
 
-  ngAfterContentInit(): void {}
-
   public onToggleStat(stat: boolean): void {
     this.statShown = stat;
+  }
+
+  public onToggleMenu(): void {
+    this.menuOpened = !this.menuOpened;
+  }
+
+  public onClosedMenu(): void {
+    this.menuOpened = false;
+  }
+
+  private setMenuValues(): void {
+    this.menuPosition = 'left';
+
+    if (this.isMobile) {
+      this.menuOpened = false;
+      this.menuMode = 'over';
+      this.showBackdrop = true;
+    } else {
+      this.menuOpened = true;
+      this.menuMode = 'push';
+      this.showBackdrop = false;
+    }
   }
 
   // --------------------------------
@@ -210,11 +243,11 @@ export class AppComponent implements OnInit, AfterViewInit, AfterContentInit {
       });
   }
 
-  private updateCategories(): void {
-    this.dataHandler
-      .getAllCategories()
-      .subscribe((categories) => (this.categories = categories));
-  }
+  // private updateCategories(): void {
+  //   this.dataHandler
+  //     .getAllCategories()
+  //     .subscribe((categories) => (this.categories = categories));
+  // }
 
   private updateTasksAndStat(): void {
     this.updateTasks();

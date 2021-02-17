@@ -1,3 +1,4 @@
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { IntroService } from './../../service/intro.service';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -13,8 +14,17 @@ export class HeaderComponent {
   @Input() public statShown!: boolean;
 
   @Output() public toggleStat = new EventEmitter<boolean>();
+  @Output() public toggleMenu = new EventEmitter();
 
-  constructor(private dialog: MatDialog, private introService: IntroService) {}
+  public isMobile!: boolean;
+
+  constructor(
+    private dialog: MatDialog,
+    private introService: IntroService,
+    private deviceDetector: DeviceDetectorService
+  ) {
+    this.isMobile = deviceDetector.isMobile();
+  }
 
   public onToggleStat(): void {
     this.toggleStat.emit(!this.statShown);
@@ -29,5 +39,9 @@ export class HeaderComponent {
       autoFocus: false,
       width: '500px',
     });
+  }
+
+  public onToggleMenu(): void {
+    this.toggleMenu.emit();
   }
 }

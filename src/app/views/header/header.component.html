@@ -1,15 +1,18 @@
 <div class="container-fluid">
   <div class="row settings">
     <div class="col-10 text-left">
+      <button mat-icon-button type="button" (click)="onToggleMenu()">
+        <mat-icon>menu</mat-icon>
+      </button>
       <span class="navbar-brand">{{ categoryName }}</span>
       <span
-        *ngIf="!statShown"
+        *ngIf="!statShown && !isMobile"
         (click)="onToggleStat()"
         class="link navbar-brand toggle-stat"
         >Показать статистику</span
       >
       <span
-        *ngIf="statShown"
+        *ngIf="statShown && !isMobile"
         (click)="onToggleStat()"
         class="link navbar-brand toggle-stat"
         >Скрыть статистику</span
@@ -19,7 +22,12 @@
       <button mat-icon-button class="header-icon" (click)="showSettings()">
         <mat-icon>settings</mat-icon>
       </button>
-      <button mat-icon-button class="header-icon" (click)="onShowIntro()">
+      <button
+        *ngIf="!isMobile"
+        mat-icon-button
+        class="header-icon"
+        (click)="onShowIntro()"
+      >
         <mat-icon>help</mat-icon>
       </button>
     </div>

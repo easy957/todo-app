@@ -31,6 +31,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { PrioritiesComponent } from './views/priorities/priorities.component';
+import { SidebarModule } from 'ng-sidebar';
 
 registerLocaleData(localeRu);
 
@@ -68,6 +69,7 @@ registerLocaleData(localeRu);
     MatDatepickerModule,
     MatCheckboxModule,
     ColorPickerModule,
+    SidebarModule.forRoot(),
   ],
   providers: [],
   entryComponents: [

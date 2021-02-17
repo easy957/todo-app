@@ -66,7 +66,7 @@
             <span class="category-title">{{ mapValue.key.title }}</span>
             <span class="edit-category-icon-area">
               <mat-icon
-                *ngIf="indexMouseMove === index"
+                *ngIf="indexMouseMove === index || isMobile"
                 (click)="$event.stopPropagation(); openEditDialog(mapValue.key)"
                 class="edit-category-icon"
                 >edit

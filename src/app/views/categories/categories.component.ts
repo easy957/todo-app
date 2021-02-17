@@ -1,7 +1,8 @@
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { OperType } from './../../dialog/OperType';
 import { EditCategoryDialogComponent } from './../../dialog/editCategoryDialog/editCategoryDialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { Component, Input, Output, OnInit } from '@angular/core';
+import { Component, Input, Output } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 
 import { Category } from './../../model/category';
@@ -11,10 +12,12 @@ import { Category } from './../../model/category';
   templateUrl: './categories.component.html',
   styleUrls: ['./categories.component.scss'],
 })
-export class CategoriesComponent implements OnInit {
+export class CategoriesComponent {
   public indexMouseMove!: number | null;
   public searchCategoryTitle!: string;
   public selectedCategoryMap!: Map<Category, number>;
+
+  public isMobile!: boolean;
 
   @Input() categories!: Category[];
 
@@ -30,12 +33,11 @@ export class CategoriesComponent implements OnInit {
   }
   @Input() uncompletedTotal!: number;
 
-  constructor(private dialog: MatDialog) {}
-
-  ngOnInit(): void {
-    setTimeout(() => {
-      this.showTasksByCategory(undefined);
-    }, 5000);
+  constructor(
+    private dialog: MatDialog,
+    private deviceDetector: DeviceDetectorService
+  ) {
+    this.isMobile = this.deviceDetector.isMobile();
   }
 
   showTasksByCategory(category: Category | undefined): void {

@@ -1,72 +1,87 @@
-<div class="wrapper">
-  <div
-    class="sidebar"
-    data-background-color="white"
-    data-step="1"
-    data-position="right"
-    data-intro="Фильтрация задач по категориям, добавление/изменение/удаление категорий, цифра указывает на количество невыполненных задач в данной категории"
+<ng-sidebar-container style="height: 100vh">
+  <ng-sidebar
+    [(opened)]="menuOpened"
+    [closeOnClickOutside]="false"
+    [closeOnClickBackdrop]="true"
+    [showBackdrop]="showBackdrop"
+    [mode]="menuMode"
+    [animate]="true"
+    [position]="menuPosition"
+    [autoFocus]="false"
+    (onClosed)="onClosedMenu()"
   >
-    <app-categories
-      (addCategory)="onAddCategory($event)"
-      (selectCategory)="onSelectCategory($event)"
-      (deleteCategory)="onDeleteCategory($event)"
-      (updateCategory)="onUpdateCategory($event)"
-      (searchCategory)="onSearchCategory($event)"
-      [selectedCategory]="selectedCategory"
-      [categoryMap]="categoryMap"
-      [categories]="categories"
-      [uncompletedTotal]="uncompletedTotalTasksCount"
-    ></app-categories>
-  </div>
-  <div class="main-panel">
-    <!-- Navbar -->
-    <nav
-      class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top pb-0"
+    <div
+      class="sidebar"
+      data-background-color="white"
+      data-step="1"
+      data-position="right"
+      data-intro="Фильтрация задач по категориям, добавление/изменение/удаление категорий, цифра указывает на количество невыполненных задач в данной категории"
     >
-      <app-header
-        [categoryName]="selectedCategory ? selectedCategory.title : 'Все'"
-        (toggleStat)="onToggleStat($event)"
-        [statShown]="statShown"
-        data-step="4"
-        data-intro="Здесь можно скрыть статистику, настроить приоритеты и их цвета, а так же вызвать эти подсказки заново."
-        data-position="bottom"
-      ></app-header>
-    </nav>
-    <!-- End Navbar -->
-    <div class="content pt-0">
-      <div
-        class="container-fluid"
-        data-step="3"
-        data-intro="Статистика по задачам"
-        data-position="bottom"
-      >
-        <app-stat
-          [totalTasksInCategory]="totalTasksCountInCategory"
-          [completeTasksInCategory]="completedCountInCategory"
-          [uncompleteTasksInCategory]="uncompletedCountInCategory"
-          [statShown]="statShown"
-        ></app-stat>
-      </div>
-      <div
-        class="container-fluid"
-        data-step="2"
-        data-intro="Здесь отображаются все Ваши задачи. Вы можете добавлять, редактировать, удалять и отмечать выполнение задачи."
-        data-position="top"
-      >
-        <app-tasks-list
-          [tasks]="tasks"
-          [priorities]="priorities"
-          [selectedCategory]="selectedCategory"
-          (addTask)="onAddTask($event)"
-          (updateTask)="onUpdateTask($event)"
-          (deleteTask)="onDeleteTask($event)"
-          (selectCategory)="onSelectCategory($event)"
-          (filterByStatus)="onFilterTasksByStatus($event)"
-          (filterByTitle)="onSearchTasks($event)"
-          (filterByPriority)="onFilterTasksByPriority($event)"
-        ></app-tasks-list>
-      </div>
+      <app-categories
+        (addCategory)="onAddCategory($event)"
+        (selectCategory)="onSelectCategory($event)"
+        (deleteCategory)="onDeleteCategory($event)"
+        (updateCategory)="onUpdateCategory($event)"
+        (searchCategory)="onSearchCategory($event)"
+        [selectedCategory]="selectedCategory"
+        [categoryMap]="categoryMap"
+        [categories]="categories"
+        [uncompletedTotal]="uncompletedTotalTasksCount"
+      ></app-categories>
     </div>
-    <app-footer></app-footer>
+  </ng-sidebar>
+  <div ng-sidebar-content>
+    <div class="main-panel">
+      <!-- Navbar -->
+      <div>
+        <nav class="navbar navbar-expand-lg navbar-transparent pb-0">
+          <app-header
+            [categoryName]="selectedCategory ? selectedCategory.title : 'Все'"
+            (toggleStat)="onToggleStat($event)"
+            (toggleMenu)="onToggleMenu()"
+            [statShown]="statShown"
+            data-step="4"
+            data-intro="Здесь можно скрыть статистику и категории, настроить приоритеты и их цвета, а так же вызвать эти подсказки заново."
+            data-position="bottom"
+          ></app-header>
+        </nav>
+      </div>
+      <!-- End Navbar -->
+      <div class="content pt-0">
+        <div
+          class="container-fluid"
+          data-step="3"
+          data-intro="Статистика по задачам"
+          data-position="bottom"
+        >
+          <app-stat
+            [totalTasksInCategory]="totalTasksCountInCategory"
+            [completeTasksInCategory]="completedCountInCategory"
+            [uncompleteTasksInCategory]="uncompletedCountInCategory"
+            [statShown]="statShown"
+          ></app-stat>
+        </div>
+        <div
+          class="container-fluid"
+          data-step="2"
+          data-intro="Здесь отображаются все Ваши задачи. Вы можете добавлять, редактировать, удалять и отмечать выполнение задачи."
+          data-position="top"
+        >
+          <app-tasks-list
+            [tasks]="tasks"
+            [priorities]="priorities"
+            [selectedCategory]="selectedCategory"
+            (addTask)="onAddTask($event)"
+            (updateTask)="onUpdateTask($event)"
+            (deleteTask)="onDeleteTask($event)"
+            (selectCategory)="onSelectCategory($event)"
+            (filterByStatus)="onFilterTasksByStatus($event)"
+            (filterByTitle)="onSearchTasks($event)"
+            (filterByPriority)="onFilterTasksByPriority($event)"
+          ></app-tasks-list>
+        </div>
+      </div>
+      <app-footer></app-footer>
+    </div>
   </div>
-</div>
+</ng-sidebar-container>
