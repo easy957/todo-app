@@ -70,36 +70,43 @@
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <div class="col-md-5 col-12">
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="onConfirm()"
-      [disabled]="inputTitle.value.trim().length == 0"
-    >
-      Сохранить
-    </button>
+  <div class="row w-100 p-0 px-md-3 d-flex justify-content-between mx-0">
+    <div class="col-md-5 col-12 p-0">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="onConfirm()"
+        [disabled]="inputTitle.value.trim().length == 0"
+      >
+        Сохранить
+      </button>
 
-    <button mat-raised-button (click)="onCancel()">Отмена</button>
-  </div>
+      <button mat-raised-button (click)="onCancel()">Отмена</button>
+    </div>
 
-  <div *ngIf="canDelete()" class="col-md-7 col-12 text-right">
-    <button
-      mat-button
-      class="green"
-      *ngIf="!task.completed"
-      (click)="complete()"
+    <div
+      *ngIf="canDelete()"
+      class="col-md-5 col-12 p-0 pt-2 pt-md-0 text-nowrap"
     >
-      Завершить задачу
-    </button>
-    <button
-      mat-button
-      class="green"
-      *ngIf="task.completed"
-      (click)="activate()"
-    >
-      Активировать
-    </button>
-    <button mat-button class="red" (click)="delete()">Удалить задачу</button>
+      <button
+        mat-button
+        class="green text-center px-2"
+        *ngIf="!task.completed"
+        (click)="complete()"
+      >
+        Завершить <span *ngIf="!isMobile">задачу</span>
+      </button>
+      <button
+        mat-button
+        class="green text-center px-2"
+        *ngIf="task.completed"
+        (click)="activate()"
+      >
+        Активировать <span *ngIf="!isMobile">задачу</span>
+      </button>
+      <button mat-button class="red text-center px-2" (click)="delete()">
+        Удалить <span *ngIf="!isMobile">задачу</span>
+      </button>
+    </div>
   </div>
 </mat-dialog-actions>

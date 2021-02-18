@@ -24,19 +24,20 @@
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <div class="col-12 text-center">
+  <div class="col-12 text-center d-flex justify-content-between flex-nowrap">
     <button
       mat-raised-button
       color="primary"
       (click)="onConfirm()"
       [disabled]="categoryTitle.trim().length == 0"
+      class="px-2"
     >
       Сохранить
     </button>
     <button mat-raised-button (click)="onCancel()">Отмена</button>
   </div>
   <div class="col-12 text-center">
-    <button *ngIf="canDelete()" mat-button (click)="delete()" class="red">
+    <button *ngIf="canDelete()" mat-button (click)="delete()" class="red pt-2">
       Удалить
     </button>
   </div>

@@ -37,7 +37,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   public statShown = true;
 
   //  ------ МЕНЮ ----------
-  public menuOpened = true;
+  public menuOpened!: boolean;
   public menuMode!: 'over' | 'push' | 'slide';
   public menuPosition!: 'start' | 'end' | 'left' | 'right' | 'top' | 'bottom';
   public showBackdrop!: boolean;
@@ -55,18 +55,18 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.isTablet = deviceService.isTablet();
 
     this.statShown = true ? !this.isMobile : false;
+    this.setMenuValues();
   }
 
   ngOnInit(): void {
-    this.setMenuValues();
     this.dataHandler
       .getAllCategories()
       .subscribe((categories) => (this.categories = categories));
     this.dataHandler
       .getAllPriorities()
       .subscribe((priorities) => (this.priorities = priorities));
-    this.onSelectCategory(undefined);
     this.fillCategories();
+    this.onSelectCategory(undefined);
   }
 
   ngAfterViewInit(): void {
@@ -89,6 +89,10 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.menuPosition = 'left';
 
     if (this.isMobile) {
+      this.menuOpened = false;
+      this.menuMode = 'over';
+      this.showBackdrop = true;
+    } else if (this.isTablet) {
       this.menuOpened = false;
       this.menuMode = 'over';
       this.showBackdrop = true;

@@ -17,6 +17,7 @@ export class HeaderComponent {
   @Output() public toggleMenu = new EventEmitter();
 
   public isMobile!: boolean;
+  public isTablet!: boolean;
 
   constructor(
     private dialog: MatDialog,
@@ -24,6 +25,7 @@ export class HeaderComponent {
     private deviceDetector: DeviceDetectorService
   ) {
     this.isMobile = deviceDetector.isMobile();
+    this.isTablet = deviceDetector.isTablet();
   }
 
   public onToggleStat(): void {

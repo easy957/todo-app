@@ -1,3 +1,4 @@
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { OperType } from './../OperType';
 import { Category } from 'src/app/model/category';
 import { DataHandlerService } from './../../service/data-handler.service';
@@ -17,12 +18,17 @@ import { ConfirmDialogComponent } from '../confirmDialog/confirmDialog.component
   styleUrls: ['./editTaskDialog.component.scss'],
 })
 export class EditTaskDialogComponent implements OnInit {
+  public isMobile!: boolean;
+
   constructor(
     private dialogRef: MatDialogRef<EditTaskDialogComponent>,
     @Inject(MAT_DIALOG_DATA) private data: [Task, string, OperType],
     private dataHandler: DataHandlerService,
-    private dialog: MatDialog
-  ) {}
+    private dialog: MatDialog,
+    private deviceService: DeviceDetectorService
+  ) {
+    this.isMobile = this.deviceService.isMobile();
+  }
 
   public dialogTitle!: string;
   public task!: Task;

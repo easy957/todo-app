@@ -3,13 +3,26 @@
   *ngFor="let priority of priorities; let index = index"
 >
   <div class="row align-self-baseline">
-    <div class="col-8">
+    <div class="col-6 col-sm-8">
       <a class="pointer">{{ priority.title }}</a>
     </div>
-    <div class="col-4 d-flex justify-content-between text-right">
+    <div class="col-6 col-sm-4 d-flex justify-content-between text-right">
       <span
+        *ngIf="isMobile"
         [(colorPicker)]="priority.color"
         [style.background]="priority.color"
+        [cpPosition]="'auto'"
+        [cpPositionOffset]="'-400%'"
+        [cpHeight]="'200px'"
+        [cpUseRootViewContainer]="true"
+        [cpDisableInput]="true"
+        class="color-circle"
+      ></span>
+      <span
+        *ngIf="!isMobile"
+        [(colorPicker)]="priority.color"
+        [style.background]="priority.color"
+        [cpPosition]="'auto'"
         class="color-circle"
       ></span>
       <p class="pointer gray" (click)="openEditPriorityDialog(priority)">
@@ -21,4 +34,11 @@
     </div>
   </div>
 </div>
-<p class="link title" (click)="openAddPriorityDialog()">Добавить приоритет</p>
+<button
+  mat-raised-button
+  color="primary"
+  class="link title mt-3"
+  (click)="openAddPriorityDialog()"
+>
+  Добавить приоритет
+</button>

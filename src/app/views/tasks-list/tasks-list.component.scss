@@ -1,6 +1,7 @@
 .completed {
-  color: #999;
   text-decoration: line-through;
+  color: #d6d6d6;
+  background-color: transparent;
 }
 
 .novalue {
@@ -99,10 +100,117 @@ td.mat-footer-cell:last-of-type {
 }
 
 .add-task-button {
-  padding: 0 45px;
   font-size: 18px;
 }
 
 .reset-filter-button {
   height: 70%;
+}
+
+.mat-form-field-wrapper {
+  padding-bottom: 0.75em !important;
+}
+
+.card-wrapper {
+  margin-top: -30px;
+}
+
+.card-mobile {
+  border-radius: 5px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.background-completed {
+  background-color: #94ada7 !important;
+}
+
+.mobile-priority-top {
+  height: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.mobile-info-inner {
+  padding-bottom: 14px;
+  padding-left: 15px;
+  margin-left: 10px;
+}
+
+.mobile-category {
+  display: inline-block;
+  text-align: left;
+  margin-top: 8px;
+  color: #8e8e8e;
+}
+
+.mobile-priority {
+  display: inline-block;
+  text-align: left;
+  margin-top: 8px;
+  margin-left: 5px;
+  color: #8e8e8e;
+}
+
+.mobile-category p {
+  margin: 0;
+}
+
+.mobile-category p.category,
+p.priority {
+  display: inline;
+  padding: 5px;
+  background-color: rgba(227, 227, 227, 0.89);
+  color: rgba(78, 78, 78, 0.89);
+  border-radius: 4px;
+}
+
+.mobile-date {
+  display: inline-block;
+  text-align: right;
+  font-size: 13px;
+  margin-top: 8px;
+  margin-left: 10px;
+  color: #8e8e8e;
+}
+
+.mobile-title {
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.check-icon-notcompleted {
+  font-size: 40px !important;
+  color: #dadada;
+}
+.mobile-check-fix {
+  margin-left: -10px;
+}
+
+.mobile-check-button {
+  height: 100%;
+  width: 100%;
+}
+
+.check-icon-completed {
+  font-size: 40px !important;
+  color: rgba(167, 214, 182, 0.89);
+}
+
+.reset-search {
+  margin-top: 10px;
+  font-size: 16px;
+  text-decoration: underline;
+  color: rgba(5, 83, 123, 0.98);
+  text-align: center;
+}
+
+div.card-mobile p {
+  margin-bottom: 0 !important;
+}
+
+@media only screen and (max-width: 767.98px) {
+  .card-wrapper {
+    margin-top: 0px;
+  }
 }

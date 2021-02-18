@@ -1,3 +1,4 @@
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { transition } from '@angular/animations';
 import { ConfirmDialogComponent } from './../../dialog/confirmDialog/confirmDialog.component';
 import { OperType } from './../../dialog/OperType';
@@ -20,7 +21,14 @@ export class PrioritiesComponent {
   @Output() updatePriority = new EventEmitter<Priority>();
   @Output() addPriority = new EventEmitter<Priority>();
 
-  constructor(private dialog: MatDialog) {}
+  public isMobile!: boolean;
+
+  constructor(
+    private dialog: MatDialog,
+    private deviceService: DeviceDetectorService
+  ) {
+    this.isMobile = this.deviceService.isMobile();
+  }
 
   public openEditPriorityDialog(priority: Priority): void {
     const dialogRef = this.dialog.open(EditCategoryDialogComponent, {

@@ -1,3 +1,4 @@
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { OperType } from './../../dialog/OperType';
 import { Priority } from 'src/app/model/priority';
 import {
@@ -10,7 +11,6 @@ import {
 } from '@angular/core';
 import { Category } from './../../model/category';
 import { ConfirmDialogComponent } from './../../dialog/confirmDialog/confirmDialog.component';
-import { DataHandlerService } from '../../service/data-handler.service';
 import { Task } from 'src/app/model/task';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -70,10 +70,14 @@ export class TasksListComponent implements OnInit {
   }
   @Input() selectedCategory!: Category | undefined;
 
+  public isMobile!: boolean;
+
   constructor(
-    private dataHandler: DataHandlerService,
-    private dialog: MatDialog
-  ) {}
+    private dialog: MatDialog,
+    private deviceService: DeviceDetectorService
+  ) {
+    this.isMobile = this.deviceService.isMobile();
+  }
 
   ngOnInit(): void {
     // датасорс обязательно нужно создавать для таблицы, в него присваивается любой источник (БД, массивы, JSON и пр.)
@@ -84,6 +88,12 @@ export class TasksListComponent implements OnInit {
 
   toggleTaskCompleted(task: Task): void {
     task.completed = !task.completed;
+  }
+
+  public getMobilePriorityBgColor(task: Task): any {
+    if (task.priority !== undefined && !task.completed) {
+      return task.priority.color;
+    }
   }
 
   // в зависимости от статуса задачи - вернуть цвет названия
