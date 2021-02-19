@@ -3,10 +3,10 @@
   *ngFor="let priority of priorities; let index = index"
 >
   <div class="row align-self-baseline">
-    <div class="col-6 col-sm-8">
+    <div class="col-6 col-sm-8 px-0">
       <a class="pointer">{{ priority.title }}</a>
     </div>
-    <div class="col-6 col-sm-4 d-flex justify-content-between text-right">
+    <div class="col-6 col-sm-4 px-0 d-flex justify-content-between text-right">
       <span
         *ngIf="isMobile"
         [(colorPicker)]="priority.color"

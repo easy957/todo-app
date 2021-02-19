@@ -291,8 +291,8 @@
             class="mobile-priority-top"
           ></div>
 
-          <div class="row pt-1 px-2">
-            <div class="col-9 col-md-10 d-flex">
+          <div class="row pt-1">
+            <div class="col-9 col-md-10 d-flex pl-2">
               <div
                 [class.completed]="task.completed"
                 class="mobile-title align-self-center"
@@ -301,7 +301,7 @@
               </div>
             </div>
 
-            <div class="col-3 col-md-2 p-0">
+            <div class="col-3 col-md-2 p-0 pr-1">
               <button
                 class="mobile-check-button"
                 (click)="$event.stopPropagation(); onToggleStatus(task)"
@@ -330,8 +330,8 @@
             </div>
           </div>
 
-          <div class="row pb-2 px-2">
-            <div class="col-12">
+          <div class="row pb-2">
+            <div class="col-12 px-2">
               <div
                 [ngClass]="{ completed: task.completed }"
                 class="mobile-category"

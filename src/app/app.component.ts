@@ -1,6 +1,6 @@
 import { IntroService } from './service/intro.service';
-import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { zip, of } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { zip } from 'rxjs';
 import { Priority } from 'src/app/model/priority';
 import { Category } from './model/category';
 import { Task } from './model/task';
@@ -13,7 +13,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit, AfterViewInit {
+export class AppComponent implements OnInit {
   public title = 'my-app';
   public tasks!: Task[];
   public categories!: Category[];
@@ -67,10 +67,6 @@ export class AppComponent implements OnInit, AfterViewInit {
       .subscribe((priorities) => (this.priorities = priorities));
     this.fillCategories();
     this.onSelectCategory(undefined);
-  }
-
-  ngAfterViewInit(): void {
-    this.introService.startIntroJS(true);
   }
 
   public onToggleStat(stat: boolean): void {

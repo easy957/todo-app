@@ -13,14 +13,6 @@ export class IntroService {
   constructor() {}
 
   public startIntroJS(checkViewed: boolean): void {
-    if (
-      checkViewed === true &&
-      localStorage.getItem(IntroService.INTRO_VIEWED_KEY) ===
-        IntroService.INTRO_VIEWED_VALUE
-    ) {
-      return;
-    }
-
     this.introJS.setOptions({
       nextLabel: 'след. >',
       prevLabel: '< пред.',
